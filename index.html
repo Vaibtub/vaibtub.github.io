@@ -86,6 +86,48 @@ details p{background:var(--sf2);border-radius:10px;padding:10px 14px;margin:8px 
 .toc{position:sticky;top:86px;align-self:start;border-left:1px solid var(--bd)}
 .toc a{display:block;padding:6px 14px;font-size:13px;color:var(--ts);margin-left:-1px;border-left:2px solid transparent}
 .toc a.on{color:var(--ac);border-color:var(--ac);font-weight:500}
+/* Karteikarten */
+.fc-stats{max-width:420px;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:20px 22px;margin-top:22px}
+.fc-stats .bar{margin-top:10px}
+.fc-tabs{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}
+.fc-dir{margin-left:auto}
+.fc-ipa{margin-top:8px;color:var(--ts);font-size:15px;font-family:"IBM Plex Serif",serif}
+.fc-table-wrap{margin-top:12px;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden}
+.fc-table{width:100%;border-collapse:collapse;font-size:14px}
+.fc-table th{text-align:left;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ts);padding:12px 16px;background:var(--sf2)}
+.fc-table td{padding:11px 16px;border-top:1px solid var(--bd);vertical-align:top}
+.fc-table td.n{width:34px;color:var(--ts);font-size:12px;padding-right:0}
+.fc-table td.n .k{color:var(--ok);font-size:14px}
+.fc-table .t b{font-weight:600}
+.fc-table .ipa{color:var(--ts);font-size:13px;margin-left:8px;font-family:"IBM Plex Serif",serif}
+.fc-table td.ex{color:var(--ts)}
+.fc-table .nt{color:var(--ts);font-size:12px;margin-top:3px}
+.fc-table .ex-m{display:none}
+@media(max-width:700px){.fc-dir{margin-left:0}.fc-table th.ex,.fc-table td.ex{display:none}.fc-table .ex-m{display:block;color:var(--ts);font-size:13px;margin-top:3px}.fc-table td,.fc-table th{padding:10px 12px}}
+.fc-wrap{max-width:460px;margin-top:26px}
+.fc-progress{font-size:13px;color:var(--ts);margin-bottom:14px;display:flex;justify-content:space-between}
+.fc-card{perspective:1200px;height:320px;cursor:pointer}
+.fc-in{position:relative;width:100%;height:100%;transition:transform .45s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
+.fc-card.flip .fc-in{transform:rotateY(180deg)}
+.fc-f,.fc-b{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r);border:1px solid var(--bd);background:var(--sf);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+.fc-b{transform:rotateY(180deg);background:var(--as);justify-content:safe center;overflow-y:auto}
+.fc-f b,.fc-b b{font-family:"IBM Plex Serif",serif;font-weight:500;font-size:26px}
+.fc-hint{margin-top:14px;font-size:12px;color:var(--ts)}
+.fc-ex{margin-top:12px;font-size:14px;color:var(--ts);max-width:340px}
+.fc-note{margin-top:10px;font-size:12px;color:var(--ts)}
+.fc-ctrl{display:flex;gap:10px;margin-top:18px}
+.fc-ctrl button{flex:1;padding:12px;border-radius:10px;border:1px solid var(--bd);background:var(--sf);font-weight:600;font-size:14px}
+.fc-ctrl .again{color:var(--no)}.fc-ctrl .again:hover{border-color:var(--no)}
+.fc-ctrl .know{color:var(--ok)}.fc-ctrl .know:hover{border-color:var(--ok)}
+.fc-done{text-align:center;padding:40px 20px;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);max-width:420px;margin-top:26px}
+.fc-done h2{margin-bottom:8px}.fc-done p{color:var(--ts);margin-bottom:18px}
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-top:22px}
+.fc-mini{perspective:1000px;height:120px;cursor:pointer}
+.fc-mini-in{position:relative;width:100%;height:100%;transition:transform .35s;transform-style:preserve-3d}
+.fc-mini.flipped .fc-mini-in{transform:rotateY(180deg)}
+.fc-mini-f,.fc-mini-b{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--bd);border-radius:10px;background:var(--sf);display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;font-size:14px}
+.fc-mini-b{transform:rotateY(180deg);background:var(--as);color:var(--ac)}
+@media(prefers-reduced-motion:reduce){.fc-in,.fc-mini-in{transition:none}}
 /* dialog / toast */
 dialog{margin:auto;width:min(560px,calc(100% - 28px));border:1px solid var(--bd);border-radius:18px;background:var(--sf);color:var(--tx);padding:24px}
 dialog::backdrop{background:rgba(10,10,20,.45)}
@@ -141,12 +183,33 @@ tasks:[{level:1,text:"Nenne je ein Alltagsbeispiel für eine Säure und eine Bas
 quiz:[{q:"Welche Aussage über Basen stimmt?",options:["Sie geben Protonen ab","Sie nehmen Protonen auf","Sie haben immer pH 7"],correct:1,explain:"Basen sind Protonenakzeptoren."},{q:"Was entsteht bei der Neutralisation?",options:["Wasser und Salz","Nur Wasser","Säure und Gas"],correct:0}],
 cheat:["Säure = Protonengeber, Base = Protonennehmer.","pH < 7 sauer, 7 neutral, > 7 basisch.","Ein pH-Schritt = Faktor 10."]};
 
+const DEMO_FC = {format:"lernraum-addon",version:1,type:"flashcards",id:"franzoesisch-wortschatz-familie",subject:"Französisch",title:"Wortschatz: Die Familie",subtitle:"12 Grundbegriffe rund um Familie und Verwandtschaft.",grade:"8",tags:["Vokabeln","Familie"],
+cards:[
+{term:"la mère",ipa:"la mɛʁ",translation:"die Mutter",example:"Ma mère travaille à l'hôpital.",note:"fem."},
+{term:"le père",ipa:"lə pɛʁ",translation:"der Vater",example:"Mon père aime cuisiner.",note:"mask."},
+{term:"la sœur",ipa:"la sœʁ",translation:"die Schwester",example:"J'ai une petite sœur.",note:"fem."},
+{term:"le frère",ipa:"lə fʁɛʁ",translation:"der Bruder",example:"Mon frère habite à Lyon.",note:"mask."},
+{term:"les parents",ipa:"le paʁɑ̃",translation:"die Eltern",example:"Mes parents sont en vacances.",note:"Plural"},
+{term:"la grand-mère",ipa:"la ɡʁɑ̃ mɛʁ",translation:"die Großmutter",example:"Ma grand-mère raconte des histoires.",note:"fem."},
+{term:"le grand-père",ipa:"lə ɡʁɑ̃ pɛʁ",translation:"der Großvater",example:"Le grand-père jardine.",note:"mask."},
+{term:"le fils",ipa:"lə fis",translation:"der Sohn",example:"Leur fils étudie la médecine.",note:"mask."},
+{term:"la fille",ipa:"la fij",translation:"die Tochter / das Mädchen",example:"Leur fille joue du piano.",note:"fem."},
+{term:"le cousin",ipa:"lə kuzɛ̃",translation:"der Cousin",example:"Mon cousin vit en Belgique.",note:"mask."},
+{term:"la famille",ipa:"la famij",translation:"die Familie",example:"Nous sommes une grande famille.",note:"fem."},
+{term:"l'enfant",ipa:"lɑ̃fɑ̃",translation:"das Kind",example:"L'enfant dort déjà.",note:"mask./fem."}
+]};
+
 const SPEC = `Du erstellst ein Lern-Addon für die Web-App «Lernraum». Antworte NUR mit einem gültigen JSON-Objekt (ohne Markdown-Zaun, ohne Kommentare).
 Sprache der Inhalte: Deutsch (oder die Sprache des Materials). Passe Niveau und Ton an die Klassenstufe an.
 
-Schema (alle Felder außer format, subject, title optional; lass leere Abschnitte weg):
+Es gibt zwei Addon-Typen. Wähle anhand des eingefügten Materials selbst den passenden:
+
+— "flashcards": IMMER dann, wenn das eingefügte Material im Kern eine Wörter-/Vokabelliste ist – z. B. eine Seite aus einem Vokabelheft, ein Vokabelteil eines Schulbuchs (Fremdsprache), eine Liste "Wort – Übersetzung" oder ähnliches. Typisch bei Fächern wie Englisch, Französisch, Spanisch, Latein usw., aber auch für Fachbegriffe anderer Fächer nutzbar.
+— "lesson": für alles andere (Erklärungen, Themen, Kapitel, Sachverhalte, Grammatikregeln als Thema).
+
+Schema "lesson" (alle Felder außer format, type, subject, title optional; lass leere Abschnitte weg):
 {
- "format":"lernraum-addon","version":1,
+ "format":"lernraum-addon","version":1,"type":"lesson",
  "id":"fach-thema-slug",            // eindeutig, klein, mit Bindestrichen
  "subject":"Chemie","title":"…","subtitle":"ein Satz","grade":"9","minutes":12,"tags":["…"],
  "brief":"2–3 Sätze: Kern des Themas",
@@ -158,9 +221,28 @@ Schema (alle Felder außer format, subject, title optional; lass leere Abschnitt
  "quiz":[{"q":"…","options":["…","…","…"],"correct":0,"explain":"…"}],   // correct = Index (ab 0)
  "cheat":["Merksatz …"]
 }
-Textformat in Strings: **fett**, *kursiv*, \`code\`, x^{hoch}, x_{tief}. Kein HTML außer in visuals.code.
+
+Schema "flashcards":
+{
+ "format":"lernraum-addon","version":1,"type":"flashcards",
+ "id":"sprache-thema-slug",
+ "subject":"Englisch","title":"Wortschatz: …","subtitle":"ein Satz","grade":"10","tags":["Vokabeln","…"],
+ "cards":[
+   {"term":"suburb","ipa":"ˈsʌbɜːb","translation":"Vorort","example":"We moved from a small apartment downtown to a large house in the suburbs.","note":"suburb → suburban"}
+ ]
+}
+Jede Karte hat GENAU diese Felder – jedes Feld enthält nur EINE Sache und die Felder dürfen niemals vermischt oder vertauscht werden:
+- "term" = das Wort bzw. der Ausdruck in der FREMDSPRACHE (Englisch, Französisch, …), genau wie im Material (inkl. "to", Artikel, Zusätze wie (AE)/(BE)). Niemals Deutsch. Niemals Lautschrift darin.
+- "ipa" = die Lautschrift, nur wenn im Material angegeben, OHNE eckige Klammern (die App setzt sie selbst), z. B. "ˈsʌbɜːb". Sonst leer lassen oder weglassen.
+- "translation" = die DEUTSCHE Übersetzung, genau wie im Material (mehrere Bedeutungen mit Semikolon getrennt). Niemals Fremdsprache.
+- "example" = der Beispielsatz bzw. die Beispielverbindung des Buchs in der Fremdsprache, wörtlich übernommen. Steht im Buch nur ein Satz, ist es dieser; bei mehreren Sätzen den ersten/wichtigsten nehmen. Kein Satz im Material → weglassen (nichts erfinden).
+- "note" = alles Übrige aus dem Buch, kurz: Wortfamilie (z. B. "minority → majority"), mit ! markierte Wendungen/Kollokationen (z. B. "a close-knit / religious community"), Genus, Plural, Unregelmäßiges. Sonst weglassen.
+Die App zeigt standardmäßig zuerst das deutsche Wort (translation) und nach dem Umdrehen term + ipa + example + note; der Nutzer kann die Richtung per Knopf umschalten. Typisches Vokabelbuch-Layout mit drei Spalten: Spalte 1 = Fremdwort + Lautschrift → "term" und "ipa"; Spalte 2 = deutsche Übersetzung → "translation"; Spalte 3 = Beispielsatz und Hinweise → "example" und "note".
+Erfasse ALLE Wörter aus dem eingefügten Material als eigene Karten (auch über mehrere Abschnitte/Seitenteile hinweg), keine Auswahl treffen und keine Karten erfinden, die nicht im Material stehen. Überschriften von Abschnitten sind keine Karten, dürfen aber in "tags" landen.
+
+Textformat in Strings (nur bei "lesson" relevant): **fett**, *kursiv*, \`code\`, x^{hoch}, x_{tief}. Kein HTML außer in visuals.code.
 Visualisierungen: eigenständig, ohne externe Ressourcen, transparenter Hintergrund, Farben mit currentColor bzw. neutralen Tönen (funktionieren in Hell und Dunkel). Interaktive HTML/JS-Visuals sind erlaubt.
-Umfang: brief, 2–4 explain-Teile, 3–6 terms, 1 visual, 1–2 examples, 3–5 tasks, 4–6 quiz, 3–5 cheat.`;
+Umfang bei "lesson": brief, 2–4 explain-Teile, 3–6 terms, 1 visual, 1–2 examples, 3–5 tasks, 4–6 quiz, 3–5 cheat.`;
 
 const SECS = [["brief","Kurz gesagt"],["explain","Erklärung"],["terms","Begriffe"],["visuals","Visualisierung"],["examples","Beispiele"],["tasks","Aufgaben"],["quiz","Selbsttest"],["cheat","Spickzettel"]];
 const LV = {1:"Leicht",2:"Mittel",3:"Schwer"};
@@ -197,7 +279,13 @@ const prog = id => db.progress[id] || (db.progress[id] = {});
 function normalize(a) {
   if (!a || typeof a !== "object") throw "Kein gültiges Objekt";
   if (!a.subject || !a.title) throw "«subject» und «title» fehlen";
-  if (!SECS.some(([k]) => a[k] && a[k].length)) throw "Keine Inhalte vorhanden";
+  a.type = a.type === "flashcards" ? "flashcards" : "lesson";
+  if (a.type === "flashcards") {
+    a.cards = arr(a.cards).map(cd).filter(c => c.term || c.translation);
+    if (!a.cards.length) throw "«cards» fehlt oder ist leer";
+  } else if (!SECS.some(([k]) => a[k] && a[k].length)) {
+    throw "Keine Inhalte vorhanden";
+  }
   a.id = slug(a.id || a.subject + "-" + a.title);
   return a;
 }
@@ -282,9 +370,12 @@ function subjects() {
 }
 const row = t => {
   const p = db.progress[t.id] || {};
+  const isFc = t.type === "flashcards";
+  const known = isFc ? new Set(p.cardsKnown || []).size : 0;
   return `<a class="row" href="#/t/${t.id}">${ico(t.subject)}<div><b>${esc(t.title)}</b><p>${esc(t.subtitle || t.subject)}</p></div>
-  ${p.quiz ? `<span class="chip">Test ${p.quiz[0]}/${p.quiz[1]}</span>` : ""}${t.minutes ? `<span class="chip">${t.minutes} min</span>` : ""}
-  ${p.star ? '<span class="chip">★</span>' : ""}${p.done ? '<span class="chip ok">✓ gelernt</span>' : ""}</a>`;
+  ${isFc ? `<span class="chip">${(t.cards || []).length} Karten</span><span class="chip${known === (t.cards || []).length && known ? " ok" : ""}">${known}/${(t.cards || []).length} gewusst</span>` :
+    `${p.quiz ? `<span class="chip">Test ${p.quiz[0]}/${p.quiz[1]}</span>` : ""}${t.minutes ? `<span class="chip">${t.minutes} min</span>` : ""}`}
+  ${p.star ? '<span class="chip">★</span>' : ""}${!isFc && p.done ? '<span class="chip ok">✓ gelernt</span>' : ""}</a>`;
 };
 const list = ts => `<div class="list">${ts.map(row).join("")}</div>`;
 const emptyBox = msg => `<div class="empty"><p style="margin:0">${msg}</p></div>`;
@@ -313,6 +404,7 @@ function subjectPage(id) {
 function topicPage(id) {
   const t = db.topics[id];
   if (!t) return emptyBox("Thema nicht gefunden.");
+  if (t.type === "flashcards") return flashcardsPage(t);
   const p = db.progress[id] || {};
   const present = SECS.filter(([k]) => arr(t[k]).length || (k === "brief" && t.brief));
   const n = {}; present.forEach(([k], i) => n[k] = i + 1);
@@ -344,6 +436,80 @@ function topicPage(id) {
   <div class="tl"><article class="art">${present.map(([k, l]) => `<section id="sec-${k}">${H(k, l)}${S[k]()}</section>`).join("")}</article>
   <nav class="toc">${present.map(([k, l]) => `<a href="#/t/${id}" data-sec="${k}">${l}</a>`).join("")}</nav></div>`;
 }
+/* ============ Karteikarten ============ */
+let fcMode = {}, fc = {};
+/* Karte normalisieren (alte Decks mit front/back/hint werden mit gelesen) */
+function cd(c) {
+  c = c || {};
+  return {
+    term: String(c.term ?? c.front ?? ""), ipa: String(c.ipa ?? ""),
+    translation: String(c.translation ?? c.back ?? ""),
+    example: String(c.example ?? ""), note: String(c.note ?? c.hint ?? "")
+  };
+}
+const ipaS = x => x ? "[" + String(x).replace(/^\s*[\[\/]+|[\]\/]+\s*$/g, "").trim() + "]" : "";
+const fcDir = () => ((db.settings || {}).fcDir === "fl2de" ? "fl2de" : "de2fl");
+const fcDirBtn = t => `<button class="btn fc-dir" data-act="fc-dir" data-id="${t.id}" title="Vorder- und Rückseite tauschen">⇄ Vorderseite: ${fcDir() === "de2fl" ? "Deutsch" : esc(t.subject)}</button>`;
+/* Vorder-/Rückseite je nach Richtung. de2fl (Standard): vorne Deutsch, hinten Fremdwort + Lautschrift + Beispiel */
+function fcSides(c, mini) {
+  const d = cd(c);
+  const foreign = `<b>${fmt(d.term)}</b>${d.ipa ? `<div class="fc-ipa">${esc(ipaS(d.ipa))}</div>` : ""}`;
+  const german = `<b>${fmt(d.translation)}</b>`;
+  const extra = mini ? "" : `${d.example ? `<div class="fc-ex">${fmt(d.example)}</div>` : ""}${d.note ? `<div class="fc-hint">${fmt(d.note)}</div>` : ""}`;
+  return fcDir() === "fl2de" ? { front: foreign, back: german + (mini ? "" : (d.example ? `<div class="fc-ex">${fmt(d.example)}</div>` : "") + (d.note ? `<div class="fc-hint">${fmt(d.note)}</div>` : "")) }
+                             : { front: german, back: foreign + extra };
+}
+function fcTable(t) {
+  const known = new Set((db.progress[t.id] || {}).cardsKnown || []);
+  const rows = t.cards.map((c, i) => { const d = cd(c); return `<tr>
+    <td class="n">${known.has(i) ? '<span class="k" title="gewusst">✓</span>' : i + 1}</td>
+    <td class="t"><b>${fmt(d.term)}</b>${d.ipa ? `<span class="ipa">${esc(ipaS(d.ipa))}</span>` : ""}${d.example ? `<div class="ex-m">${fmt(d.example)}</div>` : ""}</td>
+    <td>${fmt(d.translation)}${d.note ? `<div class="nt">${fmt(d.note)}</div>` : ""}</td>
+    <td class="ex">${fmt(d.example)}</td></tr>`; }).join("");
+  return `<h3 class="sec">Alle Wörter (${t.cards.length})</h3>
+  <div class="fc-table-wrap"><div style="overflow-x:auto"><table class="fc-table"><thead><tr><th></th><th>${esc(t.subject)}</th><th>Deutsch</th><th class="ex">Beispiel</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
+}
+function fcHeader(t) {
+  return `<div class="crumb"><a href="#/">Startseite</a> / <a href="#/s/${slug(t.subject)}">${esc(t.subject)}</a></div>
+  <h1>${esc(t.title)}</h1>${t.subtitle ? `<p class="sub">${esc(t.subtitle)}</p>` : ""}
+  <div class="meta">${[t.grade && t.grade + ". Klasse", ...arr(t.tags)].filter(Boolean).map(x => `<span>${esc(x)}</span>`).join("")}</div>`;
+}
+function flashcardsPage(t) {
+  const id = t.id, total = (t.cards || []).length, mode = fcMode[id] || "overview";
+  if (mode === "browse") {
+    return `${fcHeader(t)}
+    <div class="fc-tabs"><button class="btn" data-act="fc-overview" data-id="${id}">← Übersicht</button>${fcDirBtn(t)}</div>
+    <div class="fc-grid">${t.cards.map(c => { const sd = fcSides(c, true); return `<div class="fc-mini"><div class="fc-mini-in"><div class="fc-mini-f"><div>${sd.front}</div></div><div class="fc-mini-b"><div>${sd.back}</div></div></div></div>`; }).join("")}</div>`;
+  }
+  if (mode === "practice") {
+    if (!fc[id] || fc[id].done) {
+      fc[id] = { order: shuffled(t.cards.map((_, i) => i)), pos: 0, again: 0, done: false };
+    }
+    const s = fc[id];
+    if (s.pos >= s.order.length) {
+      return `${fcHeader(t)}<div class="fc-done"><h2>Runde geschafft 🎉</h2><p>Alle ${total} Karten gewusst${s.again ? ` (mit ${s.again} Wiederholungen)` : ""}.</p>
+      <div class="acts" style="justify-content:center"><button class="btn p" data-act="fc-restart" data-id="${id}">Nochmal üben</button><button class="btn" data-act="fc-overview" data-id="${id}">Zur Übersicht</button></div></div>`;
+    }
+    const sd = fcSides(t.cards[s.order[s.pos]]);
+    return `${fcHeader(t)}
+    <div class="fc-tabs"><button class="btn" data-act="fc-overview" data-id="${id}">← Übersicht</button>${fcDirBtn(t)}</div>
+    <div class="fc-wrap">
+      <div class="fc-progress"><span>Karte ${s.pos + 1} / ${s.order.length}</span><span>${s.again ? s.again + "× nochmal" : ""}</span></div>
+      <div class="fc-card ${s.flipped ? "flip" : ""}" data-act="fc-flip" data-id="${id}"><div class="fc-in">
+        <div class="fc-f">${sd.front}<div class="fc-note">Tippen zum Umdrehen</div></div>
+        <div class="fc-b">${sd.back}</div>
+      </div></div>
+      ${s.flipped ? `<div class="fc-ctrl"><button class="again" data-act="fc-again" data-id="${id}">Nochmal üben</button><button class="know" data-act="fc-know" data-id="${id}">Weiß ich</button></div>` : ""}
+    </div>`;
+  }
+  const known = new Set((db.progress[id] || {}).cardsKnown || []).size;
+  return `${fcHeader(t)}
+  <div class="fc-stats"><b>${known} von ${total}</b> Karten schon mal gewusst<div class="bar"><i style="width:${total ? known / total * 100 : 0}%"></i></div></div>
+  <div class="fc-tabs"><button class="btn p" data-act="fc-practice" data-id="${id}">Karteikarten üben</button><button class="btn" data-act="fc-browse" data-id="${id}">Alle Karten ansehen</button>${fcDirBtn(t)}</div>
+  ${fcTable(t)}`;
+}
+function shuffled(a) { const r = a.slice(); for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[r[i], r[j]] = [r[j], r[i]]; } return r; }
+
 function bookmarks() {
   const ts = Object.values(db.topics).filter(t => (db.progress[t.id] || {}).star);
   return `<h1>Merkliste</h1><p class="sub">Themen, die du mit ☆ markiert hast.</p><h3 class="sec">Themen</h3>${ts.length ? list(ts) : emptyBox("Noch nichts gemerkt.")}`;
@@ -364,7 +530,7 @@ function settings() {
   return `<h1>Einstellungen</h1><p class="sub">Deine Daten liegen nur in diesem Browser. Sichere sie regelmäßig.</p>
   <h3 class="sec">Daten</h3><div class="card"><div class="acts" style="margin:0">
   <button class="btn" data-act="backup">Sicherung kopieren</button><button class="btn" data-act="add">Sicherung / Addon einfügen</button>
-  <button class="btn" data-act="demo">Beispiel laden</button><button class="btn" data-act="wipe">Alles löschen</button></div>
+  <button class="btn" data-act="demo">Beispiel laden</button><button class="btn" data-act="demo-fc">Karteikarten-Beispiel laden</button><button class="btn" data-act="wipe">Alles löschen</button></div>
   <p style="margin-top:12px">Die Sicherung ist ein Text, den du in einer Datei aufbewahrst und über «Addon hinzufügen» wiederherstellst.</p></div>
   <h3 class="sec">KI-Vorlage</h3><div class="card"><p style="margin:0 0 12px">Prompt mit dem Addon-Format, den du in dein Claude-Projekt einfügst.</p><button class="btn" data-act="spec">KI-Prompt kopieren</button></div>`;
 }
@@ -395,11 +561,30 @@ function spy() {
 
 /* ============ Ereignisse ============ */
 document.addEventListener("click", e => {
+  const mini = e.target.closest(".fc-mini");
+  if (mini) { mini.classList.toggle("flipped"); return; }
   const toc = e.target.closest(".toc a");
   if (toc) { e.preventDefault(); $("#sec-" + toc.dataset.sec).scrollIntoView({behavior:"smooth"}); return; }
   const b = e.target.closest("[data-act]"); if (!b) return;
   const id = b.dataset.id, act = b.dataset.act;
   if (act === "menu") $("#side").classList.toggle("open");
+  if (act === "fc-dir") { db.settings = db.settings || {}; db.settings.fcDir = fcDir() === "de2fl" ? "fl2de" : "de2fl"; save(); if (fc[id]) fc[id].flipped = false; const y = scrollY; render(); scrollTo(0, y); }
+  if (act === "fc-overview") { fcMode[id] = "overview"; render(); }
+  if (act === "fc-browse") { fcMode[id] = "browse"; render(); }
+  if (act === "fc-practice" || act === "fc-restart") { fcMode[id] = "practice"; delete fc[id]; render(); }
+  if (act === "fc-flip") { const s = fc[id]; if (s) s.flipped = !s.flipped; const y = scrollY; render(); scrollTo(0, y); }
+  if (act === "fc-know" || act === "fc-again") {
+    const s = fc[id]; if (!s) return;
+    if (act === "fc-know") {
+      const p = prog(id); const set = new Set(p.cardsKnown || []);
+      set.add(s.order[s.pos]); p.cardsKnown = [...set]; save();
+      s.pos++;
+    } else {
+      const cur = s.order[s.pos];
+      s.order.splice(s.pos, 1); s.order.push(cur); s.again++;
+    }
+    s.flipped = false; const y = scrollY; render(); scrollTo(0, y);
+  }
   if (act === "theme") { dark = !dark; document.documentElement.dataset.theme = dark ? "dark" : ""; try { localStorage.setItem("lr-theme", dark ? "dark" : ""); } catch (x) {} render(); }
   if (act === "add") $("#dlg").showModal();
   if (act === "close") $("#dlg").close();
@@ -407,9 +592,10 @@ document.addEventListener("click", e => {
   if (act === "import-paste") importData($("#paste").value);
   if (act === "spec") copy(SPEC, "Prompt kopiert");
   if (act === "demo") importData(JSON.stringify(DEMO));
+  if (act === "demo-fc") importData(JSON.stringify(DEMO_FC));
   if (act === "backup") copy(JSON.stringify({format:"lernraum-backup", topics:db.topics, progress:db.progress}), "Sicherung kopiert");
   if (act === "done" || act === "star") { const p = prog(id); p[act] = !p[act]; save(); const y = scrollY; render(); scrollTo(0, y); }
-  if (act === "del" && confirm("Dieses Thema löschen?")) { delete db.topics[id]; delete db.progress[id]; save(); location.hash = "#/"; render(); }
+  if (act === "del" && confirm("Dieses Thema löschen?")) { delete db.topics[id]; delete db.progress[id]; delete fc[id]; delete fcMode[id]; save(); location.hash = "#/"; render(); }
   if (act === "wipe" && confirm("Wirklich alle Themen und Fortschritte löschen?")) { db = {topics:{}, progress:{}}; save(); render(); }
   if (act === "ans") {
     const q = b.closest(".q"); if (q.dataset.done) return;
